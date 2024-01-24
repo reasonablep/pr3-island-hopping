@@ -12,6 +12,13 @@ const orderSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Island'
     }
+  ],
+
+  user: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
   ]
 },
 
