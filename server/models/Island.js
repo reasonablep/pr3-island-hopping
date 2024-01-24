@@ -2,28 +2,31 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const productSchema = new Schema({
-  name: {
+const islandSchema = new Schema({
+  islandName: {
     type: String,
     required: true,
     trim: true
   },
-  description: {
-    type: String
+  islandDescription: {
+    type: String,
+    required: true,
   },
-  image: {
-    type: String
+  location: {
+    type: String,
+    required: true,
+
   },
   price: {
     type: Number,
     required: true,
-    min: 0.99
+    min: 1000,
   },
-  quantity: {
-    type: Number,
-    min: 0,
-    default: 0
-  },
+  // quantity: {
+  //   type: Number,
+  //   min: 0,
+  //   default: 0
+  // },
   category: {
     type: Schema.Types.ObjectId,
     ref: 'Category',

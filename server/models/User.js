@@ -8,12 +8,17 @@ const userSchema = new Schema({
   firstName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    min: 6,
+    max: 30
+
   },
   lastName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    min: 6, 
+    max: 30
   },
   email: {
     type: String,
