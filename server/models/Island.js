@@ -34,6 +34,6 @@ const islandSchema = new Schema({
   }
 });
 
-const Product = mongoose.model('Product', productSchema);
+const Island = mongoose.model('Island', islandSchema);
 
-module.exports = Product;
+module.exports = Island;

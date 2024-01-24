@@ -7,13 +7,19 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  products: [
+  islands: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Product'
+      ref: 'Island'
     }
   ]
-});
+},
+
+{
+  timestamps: true,
+}
+
+);
 
 const Order = mongoose.model('Order', orderSchema);
 
