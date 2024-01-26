@@ -7,7 +7,7 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
-    products: async (parent, { category, name }) => {
+    islands: async (parent, { category, name }) => {
       const params = {};
 
       if (category) {
@@ -20,15 +20,19 @@ const resolvers = {
         };
       }
 
-      return await Product.find(params).populate('category');
+      return await Island.find(params).populate('category');
     },
-    product: async (parent, { _id }) => {
-      return await Product.findById(_id).populate('category');
+    island: async (parent, { _id }) => {
+      return await Island.findById(_id).populate('category');
     },
+
+    // Populate category for order-related information
+    // Sort orders by purchase date
+
     user: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
+          path: 'orders.islands',
           populate: 'category',
         });
 
@@ -39,10 +43,13 @@ const resolvers = {
 
       throw AuthenticationError;
     },
+
+
+
     order: async (parent, { _id }, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
+          path: 'orders.islands',
           populate: 'category',
         });
 
@@ -53,22 +60,22 @@ const resolvers = {
     },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
-      // We map through the list of products sent by the client to extract the _id of each item and create a new Order.
-      await Order.create({ products: args.products.map(({ _id }) => _id) });
+      // We map through the list of islands sent by the client to extract the _id of each item and create a new Order.
+      await Order.create({ islands: args.islands.map(({ _id }) => _id) });
       const line_items = [];
 
-      for (const product of args.products) {
+      for (const island of args.islands) {
         line_items.push({
           price_data: {
             currency: 'usd',
-            product_data: {
-              name: product.name,
-              description: product.description,
-              images: [`${url}/images/${product.image}`],
+            island_data: {
+              name: island.name,
+              description: island.description,
+              images: [`${url}/images/${island.image}`],
             },
-            unit_amount: product.price * 100,
+            unit_amount: island.price * 100,
           },
-          quantity: product.purchaseQuantity,
+          quantity: island.purchaseQuantity,
         });
       }
 
@@ -90,9 +97,9 @@ const resolvers = {
 
       return { token, user };
     },
-    addOrder: async (parent, { products }, context) => {
+    addOrder: async (parent, { islands }, context) => {
       if (context.user) {
-        const order = new Order({ products });
+        const order = new Order({ islands });
 
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order },
@@ -112,10 +119,13 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-    updateProduct: async (parent, { _id, quantity }) => {
+
+    // Update quantity of available instances of an island from '1' to '0'
+
+    updateIsland: async (parent, { _id, quantity }) => {
       const decrement = Math.abs(quantity) * -1;
 
-      return await Product.findByIdAndUpdate(
+      return await Island.findByIdAndUpdate(
         _id,
         { $inc: { quantity: decrement } },
         { new: true }
