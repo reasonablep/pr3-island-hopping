@@ -41,7 +41,6 @@ const typeDefs = `
     _id: ID
     purchaseQuantity: Int
     name: String
-    image: String
     price: Float
     quantity: Int
   }
@@ -54,6 +53,7 @@ const typeDefs = `
     order(_id: ID!): Order
     checkout(islands: [IslandInput]): Checkout
   }
+
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
