@@ -8,12 +8,17 @@ const userSchema = new Schema({
   firstName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    min: 6,
+    max: 30
+
   },
   lastName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    min: 6, 
+    max: 30
   },
   email: {
     type: String,
@@ -28,7 +33,8 @@ const userSchema = new Schema({
   orders: [Order.schema]
 });
 
-// set up pre-save middleware to create password
+// set up pre-save middleware hook to create password
+// hashes the password  before saving document
 userSchema.pre('save', async function(next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
