@@ -13,7 +13,6 @@ const orderSchema = new Schema({
       ref: 'Island'
     }
   ],
-
   user: [
     {
       type: Schema.Types.ObjectId,
