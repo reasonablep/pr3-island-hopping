@@ -4,13 +4,13 @@ import { reducer } from './reducers'
 const StoreContext = createContext();
 const { Provider } = StoreContext;
 
-export function useProductReducer(initialState) {
+export function useIslandReducer(initialState) {
   return useReducer(reducer, initialState)
 }
 
 const StoreProvider = ({ value = [], ...props }) => {
-  const [state, dispatch] = useProductReducer({
-    products: [],
+  const [state, dispatch] = useIslandReducer({
+    islands: [],
     cart: [],
     cartOpen: false,
     categories: [],
