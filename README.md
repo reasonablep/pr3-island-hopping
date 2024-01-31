@@ -4,15 +4,15 @@
 
    ## Table of Contents
 
-  | Features      | 
+  |     Features    | 
 
   | Getting Started | 
   
-  | Prerequisites | 
+  |  Prerequisites  | 
   
-  | Installation  | 
+  |  Installation   | 
   
-  | Contributing  | 
+  |   Contributing  | 
 
   ## Features
   
