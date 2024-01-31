@@ -1,6 +1,7 @@
 const db = require('./connection');
 const { User, Island, Category } = require('../models');
 const cleanDB = require('./cleanDB');
+const islandsData = require('./islandsData');
 
 db.once('open', async () => {
   await cleanDB('Category', 'categories');
@@ -17,115 +18,15 @@ db.once('open', async () => {
 
   console.log('categories seeded');
 
-  const islands = await Island.insertMany([
-      {
-    islandName: 'Tropical Paradise',
-    islandDescription:
-      'A breathtaking tropical paradise with pristine beaches and crystal-clear waters.',
-    location: 'tropical-paradise.jpg',
+  const islands = await Island.insertMany(islandsData.map((island) => ({
+    islandName: island.islandName,
+    islandDescription: island.islandDescription,
+    location: island.location,
     category: categories[0]._id,
-    price: 1000000,
-    quantity: 1
-  },
-  {
-    islandName: 'Serene Retreat',
-    islandDescription:
-      'An idyllic island retreat surrounded by lush greenery and a peaceful atmosphere.',
-    location: 'serene-retreat.jpg',
-    category: categories[0]._id,
-    price: 1000000,
-    quantity: 1
-  },
-  {
-    islandName: 'Private Oasis',
-    islandDescription:
-      'Escape to your own private oasis with stunning views and exclusive amenities.',
-    location: 'private-oasis.jpg',
-    category: categories[1]._id,
-    price: 1000000,
-    quantity: 1
-  },
-  {
-    islandName: 'Exotic Haven',
-    islandDescription:
-      'Discover an exotic haven featuring unique landscapes and cultural richness.',
-    location: 'exotic-haven.jpg',
-    category: categories[1]._id,
-    price: 1000000,
-    quantity: 1
-  },
-  {
-    islandName: 'Island Retreat',
-    islandDescription:
-      'Experience a tranquil island retreat with beautiful sunsets and cozy accommodations.',
-    location: 'island-retreat.jpg',
-    category: categories[1]._id,
-    price: 1000000,
-    quantity: 1
-  },
-  {
-    islandName: 'Adventure Island',
-    category: categories[2]._id,
-    islandDescription:
-      'Embark on thrilling adventures with this island offering a variety of outdoor activities.',
-    location: 'adventure-island.jpg',
-    price: 1000000,
-    quantity: 30
-  },
-  {
-    islandName: 'Technology Hub',
-    category: categories[2]._id,
-    islandDescription:
-      'A futuristic island serving as a technology hub with state-of-the-art facilities.',
-    location: 'technology-hub.jpg',
-    price: 1000000,
-    quantity: 30
-  },
-  {
-    islandName: 'Storybook Cove',
-    category: categories[3]._id,
-    islandDescription:
-      'Immerse yourself in the charm of Storybook Cove, a whimsical and enchanting island.',
-    location: 'storybook-cove.jpg',
-    price: 1000000,
-    quantity: 1
-  },
-  {
-    islandName: 'Spin and Play Island',
-    category: categories[4]._id,
-    islandDescription: 'An island dedicated to fun and games, featuring spinning tops and more.',
-    location: 'spin-and-play-island.jpg',
-    price: 1000000,
-    quantity: 1
-  },
-  {
-    islandName: 'Plastic Horses Paradise',
-    category: categories[4]._id,
-    islandDescription:
-      'For the horse lovers, a paradise with a collection of plastic horses to enjoy.',
-    location: 'plastic-horses-paradise.jpg',
-    price: 1000000,
-    quantity: 1
-  },
-  {
-    islandName: 'Cuddly Cove',
-    category: categories[4]._id,
-    islandDescription:
-      'A warm and cuddly island retreat featuring teddy bears and cozy accommodations.',
-    location: 'cuddly-cove.jpg',
-    price: 1000000,
-    quantity: 1
-  },
-  {
-    islandName: 'Alphabet Archipelago',
-    category: categories[4]._id,
-    islandDescription:
-      'Explore the Alphabet Archipelago, an island chain with educational alphabet blocks.',
-    location: 'alphabet-archipelago.jpg',
-    price: 1000000,
-    quantity: 1
-  }
-  ]);
+    price: island.price,
+    quantity: 1, 
+    image: island.image
+  })));
 
   console.log('islands seeded');
 
