@@ -1,4 +1,5 @@
 export const islands = [
+  
   {
     id:1,
     name: "The Bahamas",

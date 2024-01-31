@@ -2,6 +2,7 @@ import { useTheme } from "@mui/material/styles";
 import { Container, Grid, useMediaQuery } from "@mui/material";
 import { islands } from "../../data";
 import IslandProducts from "./IslandProducts";
+import IslandProductsDesktop from "./IslandProductsDesktop";
 
 export default function Islands() {
 
@@ -13,9 +14,11 @@ export default function Islands() {
     <Grid item key = {island.id} 
     xs={2}
     sm={4}
-    md={4}
-    display={"flex"} flexDirection={"column"} alignItems={"center"}> 
-    <IslandProducts island={island} matches={matches}/>
+    md={6}
+    display={"flex"} flexDirection={"column"} alignItems={"center"}>
+      {matches ? (
+      <IslandProducts  island={island} matches={matches}/> )
+      : <IslandProductsDesktop island={island} matches={matches}/>}
     </Grid>
   ));
   

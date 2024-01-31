@@ -1,26 +1,27 @@
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import { ActionIconsContainerDesktop, ActionIconsContainerMobile, AppbarContainer, AppbarHeader, MyList } from "../../styles/appbar";
 import SearchIcon from '@mui/icons-material/Search';
+import { ActionIconsContainerDesktop, ActionIconsContainerMobile, AppbarContainer, AppbarHeader, MyList } from "../../styles/appbar";
 import Actions from "./actions";
+import { useUIContext } from "../context/ui";
 
 export default function AppbarDesktop({ matches }) {
+
+  const { setShowSearchBox} = useUIContext();
+
   return (
-      <AppbarContainer>
-        <AppbarHeader>Prime Isle Estate</AppbarHeader> 
-        <MyList type='row'>
-         <ListItemText primary="Home" />
-          <ListItemText primary="Categories" />
-          <ListItemText primary="Contact Us" />
-          <ListItemButton>
-          <ListItemIcon>
-          <SearchIcon>
-
-          </SearchIcon>
+  <AppbarContainer>
+    <AppbarHeader>Prime Isle Estate</AppbarHeader> 
+      <MyList type='row'>
+        <ListItemText primary="Home" />
+        <ListItemText primary="Categories" />
+        <ListItemText primary="Contact Us" />
+      <ListItemButton>
+        <ListItemIcon>
+          <SearchIcon onClick={() => setShowSearchBox(true)}/>
         </ListItemIcon>
-      </ListItemButton>
-    </MyList>
-
-    <Actions matches={matches}/>
+       </ListItemButton>
+      </MyList>
+     <Actions matches={matches}/>
   </AppbarContainer>
   );
 }

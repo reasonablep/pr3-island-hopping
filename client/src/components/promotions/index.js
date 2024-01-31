@@ -46,7 +46,7 @@ export default function Promotions() {
           exit:100,
       }}>
 
-         <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+        <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
           <MessageText>
             {messages[messageIndex]}
           </MessageText>

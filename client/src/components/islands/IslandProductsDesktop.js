@@ -4,55 +4,53 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import FitScreenIcon from '@mui/icons-material/FitScreen';
 import { useState } from 'react';
+import IslandDetail from "../islanddetails";
 import useDialogModal from "../../hooks/useDialogModal";
-import useCart from "../../hooks/useCart";
-import IslandDetail from "../islanddetails"
 import { Island, 
   IslandActionButton, 
   IslandActionsWrapper, 
   IslandAddToCart, 
   IslandFavButton, 
   IslandImage, } from "../../styles/islands";
+  import useCart from "../../hooks/useCart";
 
-export default function IslandProducts({island, matches}) {
+export default function IslandProductsDesktop({island, matches}) {
 
-  const [IslandDetailDialog, showIslandDetailDialog, closeIslandDetailDialog] = useDialogModal(IslandDetail);
+    const [showOptions, setShowOptions] = useState(false);
 
-  const { addToCart, addToCartText } = useCart(island)
+    const [IslandDetailDialog, showIslandDetailDialog, closeIslandDetailDialog] = useDialogModal(IslandDetail);
 
-  const [showOptions, setShowOptions] = useState(false);
+    const { addToCart, addToCartText } = useCart(island);
 
-  const handleMouseEnter = () => {
-    setShowOptions(true);
-  }
-  
-  const handleMouseLeave = () => {
-    setShowOptions(false);
-  }
-  
+    const handleMouseEnter = () => {
+      setShowOptions(true);
+    }
+    
+    const handleMouseLeave = () => {
+      setShowOptions(false);
+    }
+    
   return (
     <>
-      <Island onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}> 
+    <Island onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}> 
       <IslandImage src={island.image} />
-      <IslandMeta island={island} matches={matches} />
+      <IslandMeta island={island} matches={matches}/>
       <IslandFavButton isFav={0}>
         <FavoriteIcon />
       </IslandFavButton>
         
-      {showOptions && <IslandAddToCart 
-      show={showOptions} 
-      variant="outlined"
-      style={{ color: 'black',
-      position: 'relative',
-      top: 0,
-      right: 0,
-      zIndex: 2,
-    }}
-      >Add to cart </IslandAddToCart>}
+      {showOptions && 
+      <IslandAddToCart 
+        onClick={addToCart}
+        show={showOptions} 
+        variant="contained" 
+        style={{ color: 'black'}}>
+          {addToCartText}
+      </IslandAddToCart>}
 
       <IslandActionsWrapper show={showOptions}>
         <Stack direction="row">
-      
+       
           <IslandActionButton>
             <ShareIcon color="light" />
           </IslandActionButton>
@@ -64,7 +62,8 @@ export default function IslandProducts({island, matches}) {
         </Stack>
       </IslandActionsWrapper>
     </Island>
-    <IslandDetailDialog island={island}/>
+    
+    <IslandDetailDialog island={island} />
     </>
   )
 }
